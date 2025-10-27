@@ -1,0 +1,144 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #1e1e2f;
+  color: #fff;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.chat-container {
+  display: flex;
+  width: 90%;
+  max-width: 900px;
+  height: 600px;
+  background: #2c2f3a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+#user-panel {
+  width: 200px;
+  background: #252836;
+  padding: 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+#user-panel h3 {
+  text-align: center;
+  margin-top: 0;
+  color: #4a90e2;
+}
+
+#user-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  flex: 1;
+  overflow-y: auto;
+  color: #eee;
+}
+
+#change-name {
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#change-name:hover {
+  background: #2980b9;
+}
+
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #1f1f1f;
+}
+
+header {
+  background: #1e88e5;
+  text-align: center;
+  padding: 15px;
+  font-weight: bold;
+}
+
+#messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  max-width: 70%;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  word-wrap: break-word;
+  line-height: 1.4;
+}
+
+.mine {
+  background: #2979ff;
+  align-self: flex-end;
+  border-bottom-right-radius: 2px;
+}
+
+.other {
+  background: #444;
+  align-self: flex-start;
+  border-bottom-left-radius: 2px;
+}
+
+form {
+  display: flex;
+  padding: 10px;
+  background: #2a2a2a;
+  border-top: 1px solid #444;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #333;
+  color: white;
+}
+
+button {
+  padding: 10px 15px;
+  margin-left: 10px;
+  background: #1e88e5;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+button:hover {
+  background: #1565c0;
+}
+
+.system {
+  text-align: center;
+  color: #bbb;
+  font-style: italic;
+  margin: 10px 0;
+  background: #2c2c2c;
+  padding: 6px 12px;
+  border-radius: 12px;
+  display: inline-block;
+}
