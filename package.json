@@ -1,7 +1,7 @@
 {
   "name": "chat-vercel",
   "version": "1.0.0",
-  "type": "module",
+  "type": "module",  
   "main": "api/socket.js",
   "dependencies": {
     "socket.io": "^4.7.2"

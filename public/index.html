@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>💬 Chat App</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💬 Chat App</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="chat-container">
-    <div id="user-panel">
-      <h3>Pengguna Online</h3>
-      <ul id="user-list"></ul>
-      <button id="change-name">Ganti Nama</button>
-    </div>
 
-    <div class="chat-main">
-      <header>💬 Chat App Realtime</header>
-      <div id="messages"></div>
-      <form id="form">
-        <input id="m" autocomplete="off" placeholder="Ketik pesan..." />
-        <button>Kirim</button>
-      </form>
-    </div>
-  </div>
+  <div class="chat-container">
+    <div id="user-panel">
+      <h3>Pengguna Online</h3>
+      <ul id="users"></ul>       <button id="setName">Ganti Nama</button>     </div>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="script.js"></script>
+    <div class="chat-main">
+      <header>💬 Chat App Realtime</header>
+      <div id="messages"></div>
+      <form id="form">
+        <input id="message" autocomplete="off" placeholder="Ketik pesan..." />         <button id="send">Kirim</button>       </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+    <script src="script.js"></script> 
 </body>
 </html>
