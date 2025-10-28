@@ -1,23 +1,18 @@
-// script.js
+// public/script.js
 
 // --- 1. INISIASI KONEKSI SOCKET.IO KONDISIONAL ---
-
-// script.js
 let socketOptions = {};
 
+// Logika ini untuk memastikan koneksi berhasil di lingkungan Vercel
 if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
     // 1. Tambahkan path ke Serverless Function
     socketOptions.path = "/api/socket";
     
-    // 2. TAMBAHKAN KODE INI: 
-    // Beri tahu klien bahwa path yang diberikan adalah path lengkap, 
-    // bukan path yang harus dia tambahkan default /socket.io
+    // 2. Beri tahu klien bahwa path yang diberikan adalah path lengkap (mengatasi error routing di Vercel)
     socketOptions.transports = ['websocket'];
 } 
 
 const socket = io(socketOptions);
-// ... sisa kode Anda ...
-
 
 // --- 2. GET ELEMEN HTML ---
 
@@ -25,32 +20,40 @@ const usernameInput = document.getElementById("username");
 const messageInput = document.getElementById("message");
 const messages = document.getElementById("messages");
 const usersList = document.getElementById("users");
+const form = document.getElementById("form"); // Ambil elemen formulir
 
 
 // --- 3. EVENT LISTENERS (MENGIRIM PESAN & NAMA) ---
 
+// Listener untuk tombol "Ganti Nama"
 document.getElementById("setName").onclick = () => {
     const username = usernameInput.value.trim();
     if (username) {
         socket.emit("set username", username);
-        // Opsional: Sembunyikan input nama setelah diset (tergantung desain UI)
-        // console.log(`Username set to: ${username}`);
+        // Jika Anda ingin mengosongkan input nama, tambahkan di sini
     }
 };
 
-document.getElementById("send").onclick = () => {
+// PENTING: Tambahkan event listener untuk submit formulir untuk mencegah halaman me-relog.
+form.addEventListener('submit', function(e) {
+    // BARIS KRITIS INI MENCEGAH REFRESH HALAMAN!
+    e.preventDefault(); 
+    
     const msg = messageInput.value.trim();
     if (msg) {
-        // Kirim event ke server
         socket.emit("chat message", msg);
         messageInput.value = ""; // Bersihkan input setelah kirim
     }
+});
+
+// Listener untuk tombol "Kirim" (Opsional, tapi biarkan kosong agar submit formulir yang berjalan)
+document.getElementById("send").onclick = () => {
+    // Biarkan kosong, karena logika pengiriman sudah ada di form.addEventListener('submit').
 };
 
 
 // --- 4. EVENT HANDLERS (MENERIMA PESAN & UPDATE) ---
 
-// Ini hanya akan berfungsi jika Anda mengimplementasikan logika history di server
 socket.on("chat history", (history) => {
     messages.innerHTML = "";
     history.forEach((m) => addMessage(m.user, m.msg, m.time));
@@ -65,7 +68,7 @@ socket.on("chat message", (data) => {
 socket.on("server message", (msg) => {
     const li = document.createElement("li");
     li.textContent = msg;
-    li.classList.add("server"); // Gunakan CSS class 'server' untuk penanda
+    li.classList.add("server"); 
     messages.appendChild(li);
 });
 
