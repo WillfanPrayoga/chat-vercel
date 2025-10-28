@@ -1,42 +1,39 @@
-// api/socket.js
+// api/socket.js (FINAL ROBUST VERSION)
 
 import { Server } from "socket.io";
 
-let io;
+// Hapus: let io;
 let activeUsers = new Map();
 
 function getCurrentTime() {
     return new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
 }
 
-// Handler utama Vercel
 export default function handler(req, res) {
-    // Jika tidak ada server socket, tidak ada yang bisa dilakukan
-    if (!res.socket.server) {
-        res.end('Error: Socket server not found.');
+    if (!res.socket || !res.socket.server) {
+        // Handle request biasa jika tidak ada server socket
+        res.status(200).json({ message: 'Socket server handler reached.' });
         return;
     }
 
     // 1. Inisialisasi Socket.IO HANYA SATU KALI
     if (!res.socket.server.io) {
-        console.log('Starting NEW Socket.io server...');
+        console.log('STARTING SOCKET.IO SERVER...');
         
-        io = new Server(res.socket.server, {
-            path: '/api/socket', // Tambahkan path ini di server juga
+        // Gunakan 'const io' di sini, bukan variabel global
+        const io = new Server(res.socket.server, { 
             cors: {
                 origin: "*", 
                 methods: ["GET", "POST"]
             }
         });
 
-        // Simpan instance IO ke objek server Vercel
-        res.socket.server.io = io;
+        res.socket.server.io = io; // Simpan instance
         
         // Logika Utama Koneksi
         io.on('connection', (socket) => {
             console.log('✅ User connected successfully');
 
-            // Logika Event Listener Anda
             socket.on('set username', (username) => {
                 const newUsername = username || 'Guest';
                 activeUsers.set(socket.id, newUsername);
@@ -59,12 +56,8 @@ export default function handler(req, res) {
                 }
             });
         });
-    } else {
-        // Jika sudah berjalan, ambil instance yang sudah ada
-        io = res.socket.server.io;
-        console.log('Socket.io already running.');
     }
 
-    // Akhiri request HTTP Vercel
+    // Panggil res.end() di akhir
     res.end();
 }
