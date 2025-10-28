@@ -2,15 +2,21 @@
 
 // --- 1. INISIASI KONEKSI SOCKET.IO KONDISIONAL ---
 
+// script.js
 let socketOptions = {};
 
-// Logika: Jika bukan localhost, tambahkan path ke Serverless Function Vercel
 if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    // 1. Tambahkan path ke Serverless Function
     socketOptions.path = "/api/socket";
+    
+    // 2. TAMBAHKAN KODE INI: 
+    // Beri tahu klien bahwa path yang diberikan adalah path lengkap, 
+    // bukan path yang harus dia tambahkan default /socket.io
+    socketOptions.transports = ['websocket'];
 } 
-// Jika di localhost, biarkan io() mencoba path default (ini ideal untuk `vercel dev`)
 
 const socket = io(socketOptions);
+// ... sisa kode Anda ...
 
 
 // --- 2. GET ELEMEN HTML ---
